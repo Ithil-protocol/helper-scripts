@@ -5,14 +5,14 @@ const TOKEN = require("../abi/MockTaxedToken.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
-  ["contract", ["contract", "c"]],
-  ["to", ["to", "t"]],
+  ["token", ["token", "t"]],
+  ["destination", ["destination", "d"]],
   ["amount", ["amount", "a"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "contract", "c", "to", "t", "amount", "a"],
+    string: ["network", "n", "token", "t", "destination", "d", "amount", "a"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -28,9 +28,9 @@ async function main() {
 
         --network           -n : Destination network URL\n
 
-        --contract          -c : Kyber contract address\n
+        --token             -t : Token contract address\n
 
-        --to                -t : Destination\n
+        --destination       -d : Destination\n
 
         --amount            -a : Amount of tokens to mint\n
     `);
