@@ -1,0 +1,39 @@
+{
+  "name": "@ithil-protocol/v1-contracts",
+  "description": "Core smart contracts for the Ithil protocol",
+  "version": "1.0.0",
+  "license": "BUSL-1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://ithil.fi",
+  "keywords": [
+    "ithil",
+    "core",
+    "tokens",
+    "ethereum",
+    "v1"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ithil-protocol/v1-contracts"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "/contracts"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ethers": "^5.5.4",
+    "hardhat": "^2.9.0",
+    "minimist": "^1.2.5"
+  },
+  "scripts": {
+    "change-kyber-price": "node scripts/change-kyber-price.js",
+    "fund-wallet": "node scripts/fund-wallet.js",
+    "mint-tokens": "node scripts/mint-tokens.js"
+  }
+}
