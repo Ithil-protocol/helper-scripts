@@ -1,6 +1,6 @@
 {
-  "name": "@ithil-protocol/v1-contracts",
-  "description": "Core smart contracts for the Ithil protocol",
+  "name": "@ithil-protocol/helper-scripts",
+  "description": "Helper scripts for testnet testing",
   "version": "1.0.0",
   "license": "BUSL-1.1",
   "publishConfig": {
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ithil-protocol/v1-contracts"
+    "url": "https://github.com/Ithil-protocol/helper-scripts"
   },
   "engines": {
     "node": ">=14"
