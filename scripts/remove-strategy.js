@@ -3,18 +3,18 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const TOKEN_ABI = require("../abi/MockTaxedToken.json");
+const VAULT_ABI = require("../abi/Vault.json");
+const STRATEGY_ABI = require("../abi/BaseStrategy.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
-  ["token", ["token", "t"]],
-  ["destination", ["destination", "d"]],
-  ["amount", ["amount", "a"]],
+  ["vault", ["vault", "v"]],
+  ["strategy", ["strategy", "s"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "token", "t", "destination", "d", "amount", "a"],
+    string: ["network", "n", "vault", "v", "strategy", "s"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -30,11 +30,9 @@ async function main() {
 
         --network           -n : Destination network URL\n
 
-        --token             -t : Token contract address\n
+        --vault             -v : Vault contract address\n
 
-        --destination       -d : Destination\n
-
-        --amount            -a : Amount of tokens to mint\n
+        --strategy          -s : Strategy contract address\n
     `);
 
     return;
@@ -49,9 +47,8 @@ async function main() {
 
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
-  const contract = parameters.contract;
-  const to = parameters.to;
-  const amount = parameters.amount;
+  const vaultAddress = parameters.vault;
+  const strategyAddress = parameters.strategy;
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -62,11 +59,13 @@ async function main() {
   }
   const signer = new ethers.Wallet(key, provider);
 
-  const token = new ethers.Contract(contract, TOKEN_ABI, signer);
-  const tokenName = await token.name();
+  const vault = new ethers.Contract(vaultAddress, VAULT_ABI, signer);
+  const strategy = new ethers.Contract(strategyAddress, STRATEGY_ABI, signer);
+  
+  const name = await strategy.name();
 
-  if (await confirm(`Are you sure you want to mint ${amount} ${tokenName} tokens and sending them to address ${to}? (y/n)`)) {
-    await txhandler(token.mintTo, to, amount);
+  if (await confirm(`Are you sure you want to remove strategy ${name} at address ${strategyAddress}? (y/n)`)) {
+    await txhandler(vault.removeStrategy, strategyAddress);
     console.log("Done");
   } else {
     console.log("Aborted");

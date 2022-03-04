@@ -3,18 +3,18 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const TOKEN_ABI = require("../abi/MockTaxedToken.json");
+const VAULT_ABI = require("../abi/Vault.json");
+const TOKEN_ABI = require("../abi/MockToken.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
+  ["vault", ["vault", "v"]],
   ["token", ["token", "t"]],
-  ["destination", ["destination", "d"]],
-  ["amount", ["amount", "a"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "token", "t", "destination", "d", "amount", "a"],
+    string: ["network", "n", "vault", "v", "token", "t"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -30,11 +30,9 @@ async function main() {
 
         --network           -n : Destination network URL\n
 
+        --vault             -v : Vault contract address\n
+
         --token             -t : Token contract address\n
-
-        --destination       -d : Destination\n
-
-        --amount            -a : Amount of tokens to mint\n
     `);
 
     return;
@@ -49,9 +47,8 @@ async function main() {
 
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
-  const contract = parameters.contract;
-  const to = parameters.to;
-  const amount = parameters.amount;
+  const vaultAddress = parameters.vault;
+  const tokenAddress = parameters.token;
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -62,11 +59,12 @@ async function main() {
   }
   const signer = new ethers.Wallet(key, provider);
 
-  const token = new ethers.Contract(contract, TOKEN_ABI, signer);
-  const tokenName = await token.name();
+  const vault = new ethers.Contract(vaultAddress, VAULT_ABI, signer);
+  const token = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
+  const name = await token.name();
 
-  if (await confirm(`Are you sure you want to mint ${amount} ${tokenName} tokens and sending them to address ${to}? (y/n)`)) {
-    await txhandler(token.mintTo, to, amount);
+  if (await confirm(`Are you sure you want to whitelist token ${name} at address ${tokenAddress}? (y/n)`)) {
+    await txhandler(vault.whitelistToken, tokenAddress, 10, 15);
     console.log("Done");
   } else {
     console.log("Aborted");

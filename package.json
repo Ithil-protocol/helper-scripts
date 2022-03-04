@@ -29,11 +29,15 @@
     "dotenv": "^16.0.0",
     "ethers": "^5.5.4",
     "hardhat": "^2.9.0",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.5",
+    "yesno": "^0.3.1"
   },
   "scripts": {
+    "add-strategy": "node scripts/add-strategy.js",
     "change-kyber-price": "node scripts/change-kyber-price.js",
     "fund-wallet": "node scripts/fund-wallet.js",
-    "mint-tokens": "node scripts/mint-tokens.js"
+    "mint-tokens": "node scripts/mint-tokens.js",
+    "remove-strategy": "node scripts/remove-strategy.js",
+    "whitelist-token": "node scripts/whitelist-token.js"
   }
 }
