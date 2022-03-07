@@ -49,8 +49,8 @@ async function main() {
 
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
-  const contract = parameters.contract;
-  const to = parameters.to;
+  const tokenAddress = parameters.token;
+  const destinationAddress = parameters.destination;
   const amount = parameters.amount;
 
   let provider;
@@ -62,11 +62,11 @@ async function main() {
   }
   const signer = new ethers.Wallet(key, provider);
 
-  const token = new ethers.Contract(contract, TOKEN_ABI, signer);
+  const token = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
   const tokenName = await token.name();
 
-  if (await confirm(`Are you sure you want to mint ${amount} ${tokenName} tokens and sending them to address ${to}? (y/n)`)) {
-    await txhandler(token.mintTo, to, amount);
+  if (await confirm(`Are you sure you want to mint ${amount} ${tokenName} tokens and sending them to address ${destinationAddress}? (y/n)`)) {
+    await txhandler(token.mintTo, destinationAddress, amount, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");

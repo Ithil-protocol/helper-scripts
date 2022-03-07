@@ -64,7 +64,7 @@ async function main() {
   const name = await token.name();
 
   if (await confirm(`Are you sure you want to whitelist token ${name} at address ${tokenAddress}? (y/n)`)) {
-    await txhandler(vault.whitelistToken, tokenAddress, 10, 15);
+    await txhandler(vault.whitelistToken, tokenAddress, 10, 15, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");

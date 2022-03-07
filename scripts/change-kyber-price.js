@@ -92,7 +92,7 @@ async function main() {
   const token1Name = await token1Contract.name();
 
   if (await confirm(`Are you sure you want to change Kyber swap ratio of the pair ${token0Name} - ${token1Name} to ${rate_numerator}/${rate_denominator}? (y/n)`)) {
-    await txhandler(kyber.setRate, token0, token1, { numerator: rate_numerator, denominator: rate_denominator });
+    await txhandler(kyber.setRate, token0, token1, { numerator: rate_numerator, denominator: rate_denominator }, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");

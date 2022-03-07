@@ -65,7 +65,7 @@ async function main() {
   const name = await strategy.name();
 
   if (await confirm(`Are you sure you want to whitelist strategy ${name} at address ${strategyAddress}? (y/n)`)) {
-    await txhandler(vault.addStrategy, strategyAddress);
+    await txhandler(vault.addStrategy, strategyAddress, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");
