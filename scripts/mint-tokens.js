@@ -8,13 +8,11 @@ const TOKEN_ABI = require("../abi/MockTaxedToken.json");
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
   ["token", ["token", "t"]],
-  ["destination", ["destination", "d"]],
-  ["amount", ["amount", "a"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "token", "t", "destination", "d", "amount", "a"],
+    string: ["network", "n", "token", "t"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -31,10 +29,6 @@ async function main() {
         --network           -n : Destination network URL\n
 
         --token             -t : Token contract address\n
-
-        --destination       -d : Destination\n
-
-        --amount            -a : Amount of tokens to mint\n
     `);
 
     return;
@@ -51,7 +45,6 @@ async function main() {
   const network = parameters.network;
   const tokenAddress = parameters.token;
   const destinationAddress = parameters.destination;
-  const amount = parameters.amount;
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -63,10 +56,10 @@ async function main() {
   const signer = new ethers.Wallet(key, provider);
 
   const token = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
-  const tokenName = await token.name();
+  const name = await token.name();
 
-  if (await confirm(`Are you sure you want to mint ${amount} ${tokenName} tokens and sending them to address ${destinationAddress}? (y/n)`)) {
-    await txhandler(token.mintTo, destinationAddress, amount, { gasLimit: 1000000 });
+  if (await confirm(`Are you sure you want to mint 1000 ${name} tokens and send them to yourself? (y/n)`)) {
+    await txhandler(token.mint, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");

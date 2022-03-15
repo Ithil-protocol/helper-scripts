@@ -5,50 +5,20 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "token0",
+        "name": "token",
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "token1",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "numerator",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "denominator",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct IKyberNetworkProxy.Rate",
+        "internalType": "uint256",
         "name": "oldRate",
-        "type": "tuple"
+        "type": "uint256"
       },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "numerator",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "denominator",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct IKyberNetworkProxy.Rate",
+        "internalType": "uint256",
         "name": "newRate",
-        "type": "tuple"
+        "type": "uint256"
       }
     ],
     "name": "PriceWasChanged",
@@ -92,30 +62,13 @@
     "inputs": [
       {
         "internalType": "contract IERC20",
-        "name": "src",
+        "name": "token",
         "type": "address"
       },
       {
-        "internalType": "contract IERC20",
-        "name": "dest",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "numerator",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "denominator",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IKyberNetworkProxy.Rate",
+        "internalType": "uint256",
         "name": "rate",
-        "type": "tuple"
+        "type": "uint256"
       }
     ],
     "name": "setRate",

@@ -2,32 +2,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_kyber",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_vault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_liquidator",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [],
-    "name": "Expired",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -80,36 +54,9 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "Loan_Not_Repaid",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "name": "No_Withdraw",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "Obtained_Insufficient_Amount",
     "type": "error"
   },
   {
@@ -126,17 +73,6 @@
       }
     ],
     "name": "Only_Liquidator",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "Opened_Liquidable_Position",
     "type": "error"
   },
   {
@@ -314,19 +250,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "positionId",
-        "type": "uint256"
-      }
-    ],
-    "name": "closePosition",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "components": [
           {
             "internalType": "address",
@@ -422,24 +345,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "positionId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newCollateral",
-        "type": "uint256"
-      }
-    ],
-    "name": "editPosition",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -551,32 +456,6 @@
   },
   {
     "inputs": [],
-    "name": "id",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "kyberProxy",
-    "outputs": [
-      {
-        "internalType": "contract IKyberNetworkProxy",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "liquidator",
     "outputs": [
       {
@@ -622,62 +501,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "spentToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "obtainedToken",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "collateral",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "collateralIsSpentToken",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minObtained",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "maxSpent",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IStrategy.Order",
-        "name": "order",
-        "type": "tuple"
-      }
-    ],
-    "name": "openPosition",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -815,24 +638,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "riskFactor",
-        "type": "uint256"
-      }
-    ],
-    "name": "setRiskFactor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

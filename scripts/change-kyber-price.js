@@ -9,10 +9,8 @@ const TOKEN_ABI = require("../abi/MockTaxedToken.json");
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
   ["kyber", ["kyber", "k"]],
-  ["token0", ["token0", "t0"]],
-  ["token1", ["token1", "t1"]],
-  ["rate_numerator", ["rate_numerator", "rn"]],
-  ["rate_denominator", ["rate_denominator", "rd"]],
+  ["token", ["token", "t"]],
+  ["rate", ["rate", "r"]],
 ]);
 
 async function main() {
@@ -22,14 +20,10 @@ async function main() {
       "n",
       "kyber",
       "k",
-      "token0",
-      "t0",
-      "token1",
-      "t1",
-      "rate_numerator",
-      "rn",
-      "rate_denominator",
-      "rd",
+      "token",
+      "t",
+      "rate",
+      "r",
     ],
   });
 
@@ -48,13 +42,9 @@ async function main() {
 
         --kyber             -k : Kyber contract address\n
 
-        --token0            -t0 : Source token contract address\n
+        --token             -t : Token contract address\n
 
-        --token1            -t1 : Destination token contract address\n
-
-        --rate_numerator    -rn : Price rate numerator\n
-
-        --rate_denominator  -rd : Price rate denominator\n
+        --rate              -r : Price rate to 1 USD\n
     `);
 
     return;
@@ -70,10 +60,8 @@ async function main() {
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
   const kyberAddress = parameters.kyber;
-  const token0 = parameters.token0;
-  const token1 = parameters.token1;
-  const rate_numerator = parameters.rate_numerator;
-  const rate_denominator = parameters.rate_denominator;
+  const token = parameters.token;
+  const rate = parameters.rate;
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -85,14 +73,12 @@ async function main() {
   const signer = new ethers.Wallet(key, provider);
 
   const kyber = new ethers.Contract(kyberAddress, KYBER_ABI, signer);
-  const token0Contract = new ethers.Contract(token0, TOKEN_ABI, signer);
-  const token1Contract = new ethers.Contract(token1, TOKEN_ABI, signer);
+  const tokenContract = new ethers.Contract(token, TOKEN_ABI, signer);
 
-  const token0Name = await token0Contract.name();
-  const token1Name = await token1Contract.name();
+  const tokenName = await tokenContract.name();
 
-  if (await confirm(`Are you sure you want to change Kyber swap ratio of the pair ${token0Name} - ${token1Name} to ${rate_numerator}/${rate_denominator}? (y/n)`)) {
-    await txhandler(kyber.setRate, token0, token1, { numerator: rate_numerator, denominator: rate_denominator }, { gasLimit: 1000000 });
+  if (await confirm(`Are you sure you want to change Kyber swap ratio for the token ${tokenName} to ${rate} USD? (y/n)`)) {
+    await txhandler(kyber.setRate, token, rate * 10 ** 10, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");
