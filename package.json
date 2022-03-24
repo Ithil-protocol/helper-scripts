@@ -35,7 +35,6 @@
   "scripts": {
     "add-strategy": "node scripts/add-strategy.js",
     "change-kyber-price": "node scripts/change-kyber-price.js",
-    "fund-wallet": "node scripts/fund-wallet.js",
     "mint-tokens": "node scripts/mint-tokens.js",
     "remove-strategy": "node scripts/remove-strategy.js",
     "whitelist-token": "node scripts/whitelist-token.js"

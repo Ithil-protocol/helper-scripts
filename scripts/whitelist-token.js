@@ -63,8 +63,8 @@ async function main() {
   const token = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
   const name = await token.name();
 
-  if (await confirm(`Are you sure you want to whitelist token ${name} at address ${tokenAddress}? (y/n)`)) {
-    await txhandler(vault.whitelistToken, tokenAddress, 10, 15, { gasLimit: 1000000 });
+  if (await confirm(`Are you sure you want to whitelist token ${name} (address ${tokenAddress})? (y/n)`)) {
+    await txhandler(vault.whitelistToken, tokenAddress, 10, 15, { gasLimit: 30000000 });
     console.log("Done");
   } else {
     console.log("Aborted");
