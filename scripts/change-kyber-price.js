@@ -3,8 +3,8 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const KYBER_ABI = require("../abi/MockKyberNetworkProxy.json");
-const TOKEN_ABI = require("../abi/MockTaxedToken.json");
+const KYBER_ABI = require("@ithil-protocol/deployed/abi/MockKyberNetworkProxy.json");
+const TOKEN_ABI = require("@ithil-protocol/deployed/abi/MockTaxedToken.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],

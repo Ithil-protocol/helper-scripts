@@ -3,8 +3,8 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const VAULT_ABI = require("../abi/Vault.json");
-const STRATEGY_ABI = require("../abi/BaseStrategy.json");
+const VAULT_ABI = require("@ithil-protocol/deployed/abi/Vault.json");
+const STRATEGY_ABI = require("@ithil-protocol/deployed/abi/BaseStrategy.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],

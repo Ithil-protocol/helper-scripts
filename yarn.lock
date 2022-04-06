@@ -411,6 +411,10 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
+"@ithil-protocol/deployed@https://github.com/Ithil-protocol/deployed":
+  version "1.0.0"
+  resolved "https://github.com/Ithil-protocol/deployed#2fdebb9f7e431b83b30b8ccc45c91ef29d828ec3"
+
 "@metamask/eth-sig-util@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/eth-sig-util/-/eth-sig-util-4.0.0.tgz#11553ba06de0d1352332c1bde28c8edd00e0dcf6"

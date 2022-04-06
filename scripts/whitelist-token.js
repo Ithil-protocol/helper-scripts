@@ -3,8 +3,8 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const VAULT_ABI = require("../abi/Vault.json");
-const TOKEN_ABI = require("../abi/MockToken.json");
+const VAULT_ABI = require("@ithil-protocol/deployed/abi/Vault.json");
+const TOKEN_ABI = require("@ithil-protocol/deployed/abi/MockToken.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
