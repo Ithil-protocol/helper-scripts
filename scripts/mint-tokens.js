@@ -3,7 +3,6 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const TOKEN_ABI = require("@ithil-protocol/deployed/abi/MockTaxedToken.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
@@ -44,7 +43,8 @@ async function main() {
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
   const tokenAddress = parameters.token;
-  const destinationAddress = parameters.destination;
+
+  const TOKEN_ABI = require("@ithil-protocol/deployed/"+network+"/abi/MockTaxedToken.json");
 
   let provider;
   if (network == "localhost" || network == "hardhat") {

@@ -1,5 +1,5 @@
 require("dotenv/config");
-const { ethers, utils } = require("ethers");
+const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
@@ -7,11 +7,12 @@ const { txhandler } = require("./common/txhandler");
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
   ["token", ["token", "t"]],
+  ["strategy", ["strategy", "s"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "vault", "v", "token", "t"],
+    string: ["network", "n", "token", "t", "strategy", "s"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -28,6 +29,8 @@ async function main() {
         --network           -n : Destination network URL\n
 
         --token             -t : Token contract address\n
+
+        --strategy          -s : Strategy contract address\n
     `);
 
     return;
@@ -43,10 +46,10 @@ async function main() {
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
   const tokenAddress = parameters.token;
+  const strategyAddress = parameters.strategy;
 
-  const VAULT_ABI = require("@ithil-protocol/deployed/"+network+"/abi/Vault.json");
-  const TOKEN_ABI = require("@ithil-protocol/deployed/"+network+"/abi/MockToken.json");
-  const { addresses } = require("@ithil-protocol/deployed/"+network+"/deployments/addresses.json");
+  const TOKEN_ABI = require("@ithil-protocol/deployed/"+network+"/abi/MockTaxedToken.json");
+  const STRATEGY_ABI = require("@ithil-protocol/deployed/"+network+"/abi/BaseStrategy.json");
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -57,12 +60,12 @@ async function main() {
   }
   const signer = new ethers.Wallet(key, provider);
 
-  const vault = new ethers.Contract(addresses.Vault, VAULT_ABI, signer);
   const token = new ethers.Contract(tokenAddress, TOKEN_ABI, signer);
-  const name = await token.name();
+  const strategy = new ethers.Contract(strategyAddress, STRATEGY_ABI, signer);
+  const name = await strategy.name();
 
-  if (await confirm(`Are you sure you want to whitelist token ${name} (address ${tokenAddress})? (y/n)`)) {
-    await txhandler(vault.whitelistToken, tokenAddress, 10, 15, 1, { gasLimit: 3000000 });
+  if (await confirm(`Are you sure you want to approve strategy ${name} to use your tokens? (y/n)`)) {
+    await txhandler(token.approve, strategyAddress, ethers.constants.MaxUint256, { gasLimit: 1000000 });
     console.log("Done");
   } else {
     console.log("Aborted");

@@ -3,18 +3,15 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const VAULT_ABI = require("@ithil-protocol/deployed/abi/Vault.json");
-const STRATEGY_ABI = require("@ithil-protocol/deployed/abi/BaseStrategy.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
-  ["vault", ["vault", "v"]],
   ["strategy", ["strategy", "s"]],
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "vault", "v", "strategy", "s"],
+    string: ["network", "n", "strategy", "s"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -29,8 +26,6 @@ async function main() {
       Help:\n
 
         --network           -n : Destination network URL\n
-
-        --vault             -v : Vault contract address\n
 
         --strategy          -s : Strategy contract address\n
     `);
@@ -47,8 +42,11 @@ async function main() {
 
   const key = process.env.PRIVATE_KEY;
   const network = parameters.network;
-  const vaultAddress = parameters.vault;
   const strategyAddress = parameters.strategy;
+
+  const VAULT_ABI = require("@ithil-protocol/deployed/"+network+"/abi/Vault.json");
+  const STRATEGY_ABI = require("@ithil-protocol/deployed/"+network+"/abi/BaseStrategy.json");
+  const { addresses } = require("@ithil-protocol/deployed/"+network+"/deployments/addresses.json");
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
@@ -59,7 +57,7 @@ async function main() {
   }
   const signer = new ethers.Wallet(key, provider);
 
-  const vault = new ethers.Contract(vaultAddress, VAULT_ABI, signer);
+  const vault = new ethers.Contract(addresses.Vault, VAULT_ABI, signer);
   const strategy = new ethers.Contract(strategyAddress, STRATEGY_ABI, signer);
 
   const name = await strategy.name();

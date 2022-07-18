@@ -3,19 +3,17 @@ const { ethers } = require("ethers");
 const parseArgs = require("minimist");
 const { confirm } = require("./common/confirm");
 const { txhandler } = require("./common/txhandler");
-const STRATEGY_ABI = require("@ithil-protocol/deployed/abi/BaseStrategy.json");
-const LIQUIDATOR_ABI = require("@ithil-protocol/deployed/abi/Liquidator.json");
+const STRATEGY_ABI = require("@ithil-protocol/deployed/goerli/abi/BaseStrategy.json");
 
 const PARAMETERS = Object.freeze([
   ["network", ["network", "n"]],
   ["positionid", ["positionid", "pid"]],
-  ["strategy", ["strategy", "s"]],
-  ["liquidator", ["liquidator", "l"]],
+  ["strategy", ["strategy", "s"]]
 ]);
 
 async function main() {
   const argv = parseArgs(process.argv.slice(2), {
-    string: ["network", "n", "positionid", "pid", "strategy", "s", "liquidator", "l"],
+    string: ["network", "n", "positionid", "pid", "strategy", "s"],
   });
 
   const paramsCheck = PARAMETERS.every(parameterTuple => {
@@ -34,8 +32,6 @@ async function main() {
         --positionid        -pid : The ID of the position to liquidate\n
 
         --strategy          -s : Strategy contract address\n
-
-        --liquidator        -l : Liquidator contract address\n
     `);
 
     return;
@@ -53,6 +49,8 @@ async function main() {
   const pid = parameters.pid;
   const strategyAddress = parameters.strategy;
   const liquidatorAddress = parameters.liquidator;
+
+  const LIQUIDATOR_ABI = require("@ithil-protocol/deployed/"+network+"/abi/Liquidator.json");
 
   let provider;
   if (network == "localhost" || network == "hardhat") {
